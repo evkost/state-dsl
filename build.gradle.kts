@@ -17,7 +17,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             artifactId = "state-dsl"
             groupId = "io.github.evkost"
-            version = "0.1.0-beta02"
+            version = "1.0.0-beta02"
 
             from(components["java"])
 
