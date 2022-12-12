@@ -19,49 +19,60 @@ package com.evkost.example
 import com.evkost.core.annotation.InnerState
 import com.evkost.core.annotation.StateDsl
 import com.evkost.core.annotation.Updatable
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 
 fun main() {
-    val m by notifyUiStateFlow()
-    m.updateState {
-        scheduleNotifyUiState6 {
-            isNotifying = true
-            isLoading = false
-            infoExpanded = true
+    val m = MutableStateFlow(NotifyUiState(
+        infoUiState = InfoUiState(
+            title = "SDfs"
+        ),
+        scheduleNotifyUiState = ScheduleNotifyUiState(
+            infoUiState = InfoUiState(
+                title = "SDfsdf"
+            )
+        )
+    ))
+    val n by notifyUiStateFlow {
+        infoUiState {
+            title = "Sdfsdf"
         }
-
-        scheduleNotifyUiState7 {
-            isNotifying = true
-            isLoading = false
-            infoExpanded = true
+        scheduleNotifyUiState {
+            infoUiState {
+                title = "Sdfsdfsd"
+            }
         }
-
-        errorMessage = "SDfsdfsdf"
     }
 
+    m.update {
+        it.copy(
+            scheduleNotifyUiState = it.scheduleNotifyUiState.copy(
+                infoUiState = it.infoUiState.copy(
+                    title = it.infoUiState.title + "dsfsgdsfg"
+                )
+            )
+        )
+    }
     m.updateScheduleNotifyUiState {
-        isNotifying =false
+        infoUiState {
+            title += "sdfs"
+        }
     }
+
 }
 
 @StateDsl
 data class NotifyUiState(
     @Updatable val scheduleNotifyUiState: ScheduleNotifyUiState = ScheduleNotifyUiState(true),
-    val scheduleNotifyUiState1: ScheduleNotifyUiState = ScheduleNotifyUiState(true),
-    val scheduleNotifyUiState2: ScheduleNotifyUiState = ScheduleNotifyUiState(true),
-    val scheduleNotifyUiState3: ScheduleNotifyUiState = ScheduleNotifyUiState(true),
-    val scheduleNotifyUiState4: ScheduleNotifyUiState = ScheduleNotifyUiState(true),
-    val scheduleNotifyUiState5: ScheduleNotifyUiState = ScheduleNotifyUiState(true),
-    val scheduleNotifyUiState6: ScheduleNotifyUiState = ScheduleNotifyUiState(true),
-    val scheduleNotifyUiState7: ScheduleNotifyUiState = ScheduleNotifyUiState(true),
-    val scheduleNotifyUiState8: ScheduleNotifyUiState = ScheduleNotifyUiState(true),
-    @Updatable val infoUiState: InfoUiState = InfoUiState(),
+    val infoUiState: InfoUiState = InfoUiState(),
     val errorMessage: String? = null,
 )
 
 @InnerState
 data class ScheduleNotifyUiState(
-    val isNotifying: Boolean,
+    val isNotifying: Boolean = false,
     val isLoading: Boolean? = false,
+    val infoUiState: InfoUiState = InfoUiState(),
     val infoExpanded: Boolean = false,
     val infoItems: List<InfoUiState> = emptyList()
 )
