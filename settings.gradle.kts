@@ -13,7 +13,13 @@ dependencyResolutionManagement {
     }
 }
 
+//tasks.withType<JavaCompile>().configureEach {
+//    sourceCompatibility = JavaVersion.VERSION_1_8.toString()
+//    targetCompatibility = JavaVersion.VERSION_1_8.toString()
+//}
+
 rootProject.name = "StateDsl"
 include(":core")
 include(":processor")
 include(":example")
+include("extension:flow")

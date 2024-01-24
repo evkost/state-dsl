@@ -8,14 +8,14 @@ repositories {
 }
 
 dependencies {
-    implementation("com.vanniktech:gradle-maven-publish-plugin:0.22.0")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.21")
+    implementation(libs.publish.gradlePlugin)
+    implementation(libs.kotlin.gradlePlugin)
 }
 
 gradlePlugin {
     plugins {
         register("publishPlugin") {
-            id = "publish-plugin"
+            id = libs.plugins.publish.get().pluginId
             implementationClass = "plugin.PublishPlugin"
         }
     }

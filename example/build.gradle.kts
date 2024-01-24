@@ -1,7 +1,7 @@
 plugins {
-    id("com.google.devtools.ksp") version "1.7.21-1.0.8"
-    id("java-library")
-    id("org.jetbrains.kotlin.jvm")
+    alias(libs.plugins.ksp)
+    `java-library`
+    org.jetbrains.kotlin.jvm
 }
 
 sourceSets {
@@ -14,6 +14,7 @@ sourceSets {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":extension:flow"))
     implementation(project(":processor"))
     ksp(project(":processor"))
 }
